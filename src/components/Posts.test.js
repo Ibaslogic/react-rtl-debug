@@ -15,7 +15,9 @@ import { setupServer } from 'msw/node';
 test('should display loading message', () => {
   render(<Posts />);
   // screen.debug();
-  const loadingMessage = screen.getByText('A moment please...');
+  // screen.logTestingPlaygroundURL();
+  // const loadingMessage = screen.getByText('A moment please...');
+  const loadingMessage = screen.getByText(/a moment please\.\.\./i);
   expect(loadingMessage).toBeInTheDocument();
 });
 
@@ -44,7 +46,11 @@ afterAll(() => server.close());
 
 test('should fetch and display asynchronous posts', async () => {
   render(<Posts />);
-  const postItemNode = await screen.findByText('title 1');
+  // const postItemNode = await screen.findByText('title 1');
+  const postItemNode = await screen.findByRole('heading', {
+    name: /title 1/i,
+  });
+  // screen.logTestingPlaygroundURL();
   expect(postItemNode).toBeInTheDocument();
 });
 
